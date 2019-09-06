@@ -1,0 +1,273 @@
+// Last modified: 8/3/2019 5:24 PM
+// Script Variables:
+const USER_NAME = "curUser";
+const POLLINGMS = 200;
+const SLACK_DBG = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
+var SLACK_WRKSP = "TGKSD3YSG";
+
+// Implement these in your script:
+// @require		 http://www.createthebehavior.com/tm/Common.js
+// @grant		 GM_xmlhttpRequest 
+//	const scriptName = "";
+
+// globals 
+//	log, logU, dbg_log, dbg_err,
+//	xhr_get, xhr_post, Send_SlackBotMessage, 
+//	getValue, setValue, addValueChangeListener, clearValueChangeListener, 
+//	getDate, getElems, removeElems, trim, 
+//	GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
+
+
+//TODO: apply updates from this file into split out files
+
+// Log functions
+function log(message) {
+	var preamble = "[TM: "+scriptName+"]";
+	if (typeof arguments[0] === "string") {
+		arguments[0] = preamble+' '+message;
+	} else {
+		Array.prototype.unshift.call(arguments, preamble);
+	}
+	console.log.apply(null, arguments);
+}
+function logU(message) {
+	var suffix = "for: " + document.URL;
+	if (typeof arguments[0] === "string") {
+		arguments[0] = message+' '+suffix;
+	} else {
+		Array.prototype.unshift.call(arguments, suffix);
+	}
+	log.apply(null, arguments);
+}
+function dbg_log(message) {
+	if (window.debug) log(arguments);
+}
+function dbg_err(funcName, err) {
+	// Log error
+	dbg_log(funcName+" error", err);
+
+	// Notify debug channel
+	Send_SlackBotMessage(dbg, "Error in "+scriptName+"."+funcName+": "+err);
+
+	// Allow chrome debugging
+	if (window.debug) debugger;
+}
+
+// XHR Requests
+function xhr_get(url, callback) {
+	dbg_log("xhr_get() called", {"url": url});
+
+	GM_xmlhttpRequest({
+	  method: "GET",
+	  url: url,
+	  onload: function(response) {
+		dbg_log("xhr_get.onload", response);
+		if (callback) callback(response);
+	  }
+	});
+}
+function xhr_post(url, body, callback) {
+	dbg_log("xhr_post() called", {"url": url, "body": body});
+
+	GM_xmlhttpRequest({
+	  method: "POST",
+	  url: url,
+	  data: JSON.stringify(body),
+	  headers: {
+		"Content-Type": "application/json"
+	  },
+	  onload: function(response) {
+		dbg_log("xhr_post.onload() called", {"response": response});
+		if (callback) callback(response);
+	  }
+	});
+}
+
+
+// Slack Messages
+function Send_SlackBotMessage(channel, msg) {
+	dbg_log("Send_SlackBotMessage() called", {"message": msg, "channel": channel});
+
+	if (window.debug) channel = SLACK_DEBUGCHAN;
+
+	var url = "https://hooks.slack.com/services/"+SLACK_WORKSPACE+"/"+channel;
+	var body = {"text": msg};
+	xhr_post(url, body);
+}
+
+// Storage functions (Replaces: GM_getValue, GM_setValue, GM_addValueChangeListener)
+var valueCache = {};
+function getValue(name, toJson) {
+	dbg_log("getValue() called", {"name": name, "toJson": toJson});
+
+	var value = localStorage[name];
+
+	if (!value && toJson) {
+		dbg_log("getValue() returned: EMPTY"); 
+		return null;
+	}
+
+	if (toJson) value = JSON.parse(value);
+	dbg_log("getValue() found", value);
+	return value;
+}
+function setValue(name, value) {
+	dbg_log("setValue() called", {"name": name, "value": value});
+	if (typeof value === "object") value = JSON.stringify(value);
+	localStorage.setItem(name, value);
+}
+
+function addValueChangeListener(name, callback) {
+	dbg_log("addValueChangeListener() called", {"name": name});
+
+	var updateIfChanged = new function() {
+		dbg_log("updateIfChanged() fired");
+		var new_value = getValue(name);
+		if (!valueCache.hasOwnProperty(name)) valueCache[name] = new_value;
+		var old_value = valueCache[name];
+		dbg_log("updateIfChanged() values:", new_value, old_value);
+		if (old_value != new_value) {
+			valueCache[name] = new_value;
+			dbg_log("updateIfChanged() firing callback");
+			callback(name, old_value, new_value, false);
+		}
+	};
+
+	return GM_wait(updateIfChanged, POLLINGMS, true);
+}
+
+// Helper functions
+function getDate() {
+	var val = new Date().toLocaleString().replace(",","").replace(/:.. /," ");
+	dbg_log("getDate() called", val);
+	return val;
+}
+function getElems(selectors, root) {
+	dbg_log("getElems() called", {"selectors": selectors, "root": root});
+
+	if (!root) root = document;
+	var val = root.querySelectorAll(selectors);
+	dbg_log("getElems() found: ", val);
+	return val;
+}
+function removeElems(elemArray) {
+	dbg_log("removeElems() called", {"elemArray": elemArray});
+
+	Array.prototype.forEach.call(elemArray, function(child, x){
+		child.parentNode.removeChild(child);
+	});
+}
+function trim(stringToTrim, trimChar) {
+  if (trimChar === "]") trimChar = "\\]";
+  if (trimChar === "\\") trimChar = "\\\\";
+  return stringToTrim.replace(new RegExp(
+    "^[" + trimChar + "]+|[" + trimChar + "]+$", "g"
+  ), "");
+}
+
+// GM functions
+function GM_getRequestParams() {
+	dbg_log("GM_getRequestParams() called");
+
+	var search = location.search.substring(1); if (search === "") return {};
+	var obj = '{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}';
+	dbg_log("RequestParamParser", {"params": search, "string": obj});
+	function decode(key, value) {return key===""?value:value===""?key:decodeURIComponent(value)}; //TODO: handle for ?debug
+	return JSON.parse(obj, decode);
+}
+
+function GM_getUser() {
+	// Grab username from session, short-circuit if not an email
+	var user = getValue(USER_NAME);
+	if (user && user.length) return user;
+
+	// Try and find username div, and default to email if not present
+	user = prompt("Enter your name");
+	dbg_log("GM_getUser", {"session":getValue(USER_NAME), "text":user});
+
+	setValue(USER_NAME, user);
+	return user;
+}
+
+function GM_loaded(func, repeat) {
+	GM_RegisterDebugging();
+	dbg_log("GM_loaded() called", {"repeat": repeat});
+
+	try {
+		// Wait until doc loaded
+		document.onreadystatechange = function () {
+		    if (document.readyState == "complete") {
+		    	dbg_log("document.readyState() complete");
+		    	var recur = (repeat != null && repeat > 0);
+		    	if (!recur) repeat = 200;
+		    	GM_wait(func, repeat, recur); // Todo: quick hit first?
+		    }
+		};
+	}
+	catch(err) {
+		dbg_err("GM_loaded()", err);
+	}
+}
+
+var listenerIDs = [];
+function GM_wait(func, timeout, recur) {
+	dbg_log("GM_wait() called", {"timeout": timeout, "recur": recur});
+	var id = -1;
+
+	var doWork = function() {
+		try {
+			func();
+		}
+		catch(err) {
+			dbg_err("GM_wait()", err);
+		}
+	};
+
+	if (recur) {
+		id = setInterval(doWork, timeout); 
+	} else {
+		id = setTimeout(doWork, timeout); 
+	}
+
+	// Criticial error that should never happen
+	if (id == -1) debugger;
+
+	listenerIDs.push(id);
+	dbg_log("GM_wait() registered", {"listenerID": id});
+	return id;
+}
+	
+function GM_clearWait(id) {
+	dbg_log("GM_clearWait() called", {"id": id});
+
+	// Remove from registered id's
+	var x = listenerIDs.indexOf(id);
+	if (x > -1) listenerIDs = listenerIDs.splice(x, 1);
+
+	clearInterval(id);
+}
+function GM_clearWaits() {
+	if (!listenerIDs) return;
+	
+	dbg_log("GM_clearWaits() called", {"before": listenerIDs});
+
+	for (var x = 0; x < listenerIDs.length; x++)
+	{
+		var id = listenerIDs[x];
+		GM_clearWait(id);
+	}
+}
+
+function GM_RegisterDebugging() {
+	var params = GM_getRequestParams();
+	if (params.hasOwnProperty("debug")) {
+		window.debug = true;
+	}
+
+	// handle for unhandled
+	if (!window.debug) window.debug = false;
+
+	dbg_log("GM_RegisterDebugging() enabled", {"params": params});
+
+	return window.debug;
+}
