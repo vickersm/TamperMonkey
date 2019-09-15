@@ -2,7 +2,7 @@
 // @name       	 Comment Box Remover
 // @description	 Removes social media boxes from various websites
 // @downloadURL	 http://createthebehavior.com/tm/CommentBoxRemover.user.js
-// @version      2.29
+// @version      2.30
 // @author		 Mike Vickers
 // @namespace	 http://vespersoft.net/
 // @require		 http://www.createthebehavior.com/tm/Common.js
@@ -26,28 +26,12 @@
 
 // Upsize these into GM_loaded, with exclusion links generated, and collapse into excludeScripts requestParam (GM_addRequestParam func?)
 // Also, centralize debug-flag such that if a script doesnt work, it enables the equiv mode across the board
-function getSkipLink() {
-	var append = (document.URL.includes("?")) ? "&" : "?";
-	return document.URL + append + suffix;
-}
-function hasSkipLink() {
-	return document.URL.includes(suffix);
-}
+
 
 // Script Constants
 var scriptName = "CommentBox";
-var suffix = "gmCBR=exclude";
 
-GM_loaded(function() {
-    'use strict';
-
-	if (hasSkipLink()) {
-		log("Exclude present, aborting script");
-		return;
-	} else {
-		log("See unmodified version here: "+getSkipLink());
-	}
-}, 1000);
+GM_loaded(RemoveComments, 1000);
 
 function RemoveComments() {
 

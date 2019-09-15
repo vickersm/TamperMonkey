@@ -120,7 +120,7 @@ function setValue(name, value) {
 function addValueChangeListener(name, callback) {
 	dbg_log("addValueChangeListener() called", {"name": name});
 
-	var updateIfChanged = new function() {
+	var updateIfChanged = function() {
 		dbg_log("updateIfChanged() fired");
 		var new_value = getValue(name);
 		if (!valueCache.hasOwnProperty(name)) valueCache[name] = new_value;
@@ -169,6 +169,9 @@ function trim(stringToTrim, trimChar) {
 function GM_getRequestParams() {
 	dbg_log("GM_getRequestParams() called");
 
+	// polyfill: https://cdnjs.cloudflare.com/ajax/libs/url-search-params/1.1.0/url-search-params.js
+	//return new URLSearchParams(location.search);
+
 	var search = location.search.substring(1); if (search === "") return {};
 	var obj = '{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}';
 	dbg_log("RequestParamParser", {"params": search, "string": obj});
@@ -189,11 +192,32 @@ function GM_getUser() {
 	return user;
 }
 
+function GM_hasSkipLink() {
+	var params = new URLSearchParams(location.search);
+	var skip = "tmSkip";
+	var val = params.get(skip) || "";
+
+	if (params.has(skip) && val.includes(scriptName)) {
+		dbg_log("Skip present, aborting");
+		return true;
+	}
+
+	val += "."+scriptName;
+	params.set(skip, trim(val, "."));
+
+	var newLink = location.pathname+"?"+params;
+	log("See unmodified version here: "+newLink);
+
+	return false;
+}
 function GM_loaded(func, repeat) {
 	GM_RegisterDebugging();
 	dbg_log("GM_loaded() called", {"repeat": repeat});
 
 	try {
+		// Handle for Skip link
+		if (GM_hasSkipLink()) return;
+
 		// Wait until doc loaded
 		document.onreadystatechange = function () {
 		    if (document.readyState == "complete") {
@@ -259,15 +283,17 @@ function GM_clearWaits() {
 }
 
 function GM_RegisterDebugging() {
-	var params = GM_getRequestParams();
-	if (params.hasOwnProperty("debug")) {
+	var params = new URLSearchParams(location.search);
+	if (params.has("debug")) {
 		window.debug = true;
 	}
 
-	// handle for unhandled
-	if (!window.debug) window.debug = false;
-
-	dbg_log("GM_RegisterDebugging() enabled", {"params": params});
+	if (window.debug) {
+		dbg_log("GM_RegisterDebugging() enabled", {"params": location.search});
+	} else {
+		// handle for unhandled
+		window.debug = false;
+	}
 
 	return window.debug;
 }
