@@ -4,9 +4,9 @@
 // @namespace    http://vespersoft.net/
 // @description  Watches for changes in W3Schools
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/W3Schools.user.js
-// @version      1.2
+// @version      1.3
 // @match        https://www.w3schools.com/*/exercise*
-// @require      https://github.com/vickersm/TamperMonkey/raw/master/0Common.js
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
 // @grant        GM_xmlhttpRequest
 // @run-at       document-body
 // ==/UserScript==
