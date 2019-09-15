@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name		Pluralsight
-// @author		Mike Vickers
-// @namespace	http://vespersoft.net/
-// @description	Uploads and maintains pluralsight data
-// @downloadURL	http://createthebehavior.com/tm/Pluralsight.user.js
-// @version		1.4.3
-// @match		https://app.pluralsight.com/*
-// @grant		GM_xmlhttpRequest
-// @run-at		document-body
+// @name         Pluralsight
+// @author       Mike Vickers
+// @namespace    http://vespersoft.net/
+// @description  Uploads and maintains pluralsight data
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/Pluralsight.user.js
+// @version      1.5
+// @match        https://app.pluralsight.com/*
+// @grant        GM_xmlhttpRequest
+// @run-at       document-body
 // ==/UserScript==
 
 // Script Constants
@@ -159,7 +159,7 @@ var sessLog = {
 			// Notify debug channel the error
 			Send_SlackBotMessage(dbg, "Error in sendDiffs: "+err);
 		}
-		
+
 		// Message slack if any messages to send
 		if (array.length > 0) {
 			// Prepend user

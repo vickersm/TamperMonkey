@@ -1,5 +1,4 @@
-// Last modified: 5/25/2019 12:38 PM
-// @require		 http://www.createthebehavior.com/tm/Common.Logging.js
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.Logging.js
 /* globals log, logU */
 
 // Needed variables: const scriptName = "";

@@ -1,19 +1,19 @@
 // ==UserScript==
 // @name         Matrix Portal
 // @description  Adds needed functionality to the portal page
-// @downloadURL	 http://createthebehavior.com/tm/MatrixPortal.user.js
-// @version      0.80
-// @author		 Mike Vickers
-// @namespace	 http://vespersoft.net/
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/MatrixPortal.user.js
+// @version      0.90
+// @author       Mike Vickers
+// @namespace    http://vespersoft.net/
 // @match        https://matrix.ntreis.net/Matrix/Public/Portal.aspx*
-// @require		 http://www.createthebehavior.com/tm/Common.js
-// @grant		 GM_xmlhttpRequest
-// @run-at		 document-end
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
+// @grant        GM_xmlhttpRequest
+// @run-at       document-end
 
 // ==/UserScript==
 /* globals log, logU, xhr_get, xhr_post, Send_SlackBotMessage,
 	getValue, setValue, addValueChangeListener, clearValueChangeListener,
-	getDate, getElems, removeElems, trim, 
+	getDate, getElems, removeElems, trim,
 	GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging */
 
 // Script Constants

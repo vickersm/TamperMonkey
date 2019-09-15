@@ -1,4 +1,3 @@
-// Last modified: 8/3/2019 5:24 PM
 // Script Variables:
 const USER_NAME = "curUser";
 const POLLINGMS = 200;
@@ -6,15 +5,15 @@ const SLACK_DBG = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
 var SLACK_WRKSP = "TGKSD3YSG";
 
 // Implement these in your script:
-// @require		 http://www.createthebehavior.com/tm/Common.js
-// @grant		 GM_xmlhttpRequest 
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
+// @grant        GM_xmlhttpRequest
 //	const scriptName = "";
 
-// globals 
-//	log, logU, dbg_log, dbg_err,
-//	xhr_get, xhr_post, Send_SlackBotMessage, 
-//	getValue, setValue, addValueChangeListener, clearValueChangeListener, 
-//	getDate, getElems, removeElems, trim, 
+// globals
+//	log, logU, dbg_log, dbg_error,
+//	xhr_get, xhr_post, Send_SlackBotMessage,
+//	getValue, setValue, addValueChangeListener, clearValueChangeListener,
+//	getDate, getElems, removeElems, trim,
 //	GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
 
 
@@ -22,27 +21,39 @@ var SLACK_WRKSP = "TGKSD3YSG";
 
 // Log functions
 function log(message) {
+	// Declarations
 	var preamble = "[TM: "+scriptName+"]";
-	if (typeof arguments[0] === "string") {
-		arguments[0] = preamble+' '+message;
+	var args = arguments;
+
+	// Insert preamble before any args
+	if (typeof args[0] === "string") {
+		args[0] = preamble+' '+message;
 	} else {
-		Array.prototype.unshift.call(arguments, preamble);
+		Array.prototype.unshift.call(args, preamble);
 	}
-	console.log.apply(null, arguments);
+
+	// Pass along logging arguments
+	console.log.apply(null, args);
 }
 function logU(message) {
+	// Declarations
 	var suffix = "for: " + document.URL;
-	if (typeof arguments[0] === "string") {
-		arguments[0] = message+' '+suffix;
+	var args = arguments;
+
+	// Insert suffix after any args
+	if (typeof args[0] === "string") {
+		args[0] = message+' '+suffix;
 	} else {
-		Array.prototype.unshift.call(arguments, suffix);
+		Array.prototype.unshift.call(args, suffix);
 	}
-	log.apply(null, arguments);
+
+	// Pass along logging arguments
+	log.apply(null, args);
 }
 function dbg_log(message) {
 	if (window.debug) log(arguments);
 }
-function dbg_err(funcName, err) {
+function dbg_error(funcName, err) {
 	// Log error
 	dbg_log(funcName+" error", err);
 
@@ -103,7 +114,7 @@ function getValue(name, toJson) {
 	var value = localStorage[name];
 
 	if (!value && toJson) {
-		dbg_log("getValue() returned: EMPTY"); 
+		dbg_log("getValue() returned: EMPTY");
 		return null;
 	}
 
@@ -175,7 +186,7 @@ function GM_getRequestParams() {
 	var search = location.search.substring(1); if (search === "") return {};
 	var obj = '{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}';
 	dbg_log("RequestParamParser", {"params": search, "string": obj});
-	function decode(key, value) {return key===""?value:value===""?key:decodeURIComponent(value)}; //TODO: handle for ?debug
+	function decode(key, value) {return key===""?value:value===""?key:decodeURIComponent(value);}
 	return JSON.parse(obj, decode);
 }
 
@@ -229,7 +240,7 @@ function GM_loaded(func, repeat) {
 		};
 	}
 	catch(err) {
-		dbg_err("GM_loaded()", err);
+		dbg_error("GM_loaded()", err);
 	}
 }
 
@@ -243,24 +254,24 @@ function GM_wait(func, timeout, recur) {
 			func();
 		}
 		catch(err) {
-			dbg_err("GM_wait()", err);
+			dbg_error("GM_wait()", err);
 		}
 	};
 
 	if (recur) {
-		id = setInterval(doWork, timeout); 
+		id = setInterval(doWork, timeout);
 	} else {
-		id = setTimeout(doWork, timeout); 
+		id = setTimeout(doWork, timeout);
 	}
 
 	// Criticial error that should never happen
-	if (id == -1) debugger;
+	if (id < 0) dbg_error("GM_wait()", "id is < 0 and should never happen");
 
 	listenerIDs.push(id);
 	dbg_log("GM_wait() registered", {"listenerID": id});
 	return id;
 }
-	
+
 function GM_clearWait(id) {
 	dbg_log("GM_clearWait() called", {"id": id});
 
@@ -272,7 +283,7 @@ function GM_clearWait(id) {
 }
 function GM_clearWaits() {
 	if (!listenerIDs) return;
-	
+
 	dbg_log("GM_clearWaits() called", {"before": listenerIDs});
 
 	for (var x = 0; x < listenerIDs.length; x++)

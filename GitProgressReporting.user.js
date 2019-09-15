@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name        Git Progress Reporting
-// @namespace   https://devinsight.slack.com/team/UGKTP5KNE
-// @version     1.6.2
-// @downloadURL http://www.createthebehavior.com/tm/GitProgressReporting.user.js
-// @description Sends progress updates from interactive Git to Slack
-// @author      Mike Vickers
-// @include     https://learngitbranching.js.org/*
-// @grant       GM_xmlhttpRequest
-// @connect     hooks.slack.com
+// @name         Git Progress Reporting
+// @namespace    https://devinsight.slack.com/team/UGKTP5KNE
+// @version      1.7
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/GitProgressReporting.user.js
+// @description  Sends progress updates from interactive Git to Slack
+// @author       Mike Vickers
+// @include      https://learngitbranching.js.org/*
+// @grant        GM_xmlhttpRequest
+// @connect      hooks.slack.com
 // ==/UserScript==
 
 
@@ -147,7 +147,7 @@ var getUserName = function() {
 
 (function() {
     'use strict';
-    
+
     // Populate username from storage (or ask)
     currentUser = getUserName();
     logU("Watching for changes", {user: currentUser});

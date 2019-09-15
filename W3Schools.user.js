@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name		W3Schools
-// @author		Evan Hergert
-// @namespace	http://vespersoft.net/
-// @description	Watches for changes in W3Schools
-// @downloadURL	http://createthebehavior.com/tm/W3Schools.user.js
-// @version		1.1
-// @match		https://www.w3schools.com/*/exercise*
-// @require		http://www.createthebehavior.com/tm/Common.js
-// @grant		GM_xmlhttpRequest 
-// @run-at		document-body
+// @name         W3Schools
+// @author       Evan Hergert
+// @namespace    http://vespersoft.net/
+// @description  Watches for changes in W3Schools
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/W3Schools.user.js
+// @version      1.2
+// @match        https://www.w3schools.com/*/exercise*
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/0Common.js
+// @grant        GM_xmlhttpRequest
+// @run-at       document-body
 // ==/UserScript==
 
 // POTENTIAL TO-DOs:
@@ -19,11 +19,11 @@
 // Exclude script from running on certain sub-paths
 
 // Script Constants
-const scriptName = "W3Schools";
-const BASE_PATH = "https://www.w3schools.com/";
-const USER_NAME = "curUser";
-const POLLING_MS = 200;
-const debug = false;
+var scriptName = "W3Schools";
+var BASE_PATH = "https://www.w3schools.com/";
+var USER_NAME = "curUser";
+var POLLING_MS = 200;
+var debug = false;
 
 // Slack Channels
 var w3s = "BHUR4MK41/8wXKvRFD2R097oFlHNWF2Prc";
@@ -77,4 +77,4 @@ document.onreadystatechange = function () {
     if (document.readyState == "complete") {
 		setTimeout(Main, 200);
     }
-}
+};

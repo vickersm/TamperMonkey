@@ -1,8 +1,7 @@
-// Last modified: 5/25/2019 12:38 PM
 // Script Variables
 const POLLINGMS = 200;
 
-// @require		 http://www.createthebehavior.com/tm/Common.LocalStorage.js
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.LocalStorage.js
 /* globals getValue, setValue, addValueChangeListener, clearValueChangeListener, clearValueChangeListeners */
 
 

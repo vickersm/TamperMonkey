@@ -1,26 +1,26 @@
 // ==UserScript==
-// @name       	 Comment Box Remover
-// @description	 Removes social media boxes from various websites
-// @downloadURL	 http://createthebehavior.com/tm/CommentBoxRemover.user.js
-// @version      2.30
-// @author		 Mike Vickers
-// @namespace	 http://vespersoft.net/
-// @require		 http://www.createthebehavior.com/tm/Common.js
+// @name         Comment Box Remover
+// @description  Removes social media boxes from various websites
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/CommentBoxRemover.user.js
+// @version      3.0
+// @author       Mike Vickers
+// @namespace    http://vespersoft.net/
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
 // @include      *
-// @exclude		 *stackoverflow.com*
-// @exclude		 *google.com*
-// @exclude		 *qustodio.com*
-// @exclude		 *facebook.com*
-// @exclude		 *twitter.com*
-// @exclude		 *theoldreader.com*
-// @exclude		 *jsfiddle.net*
-// @exclude		 *superuser.com*
-// @grant		 GM_xmlhttpRequest
-// @run-at		 document-end
+// @exclude      *stackoverflow.com*
+// @exclude      *google.com*
+// @exclude      *qustodio.com*
+// @exclude      *facebook.com*
+// @exclude      *twitter.com*
+// @exclude      *theoldreader.com*
+// @exclude      *jsfiddle.net*
+// @exclude      *superuser.com*
+// @grant        GM_xmlhttpRequest
+// @run-at       document-end
 // ==/UserScript==
 /* globals log, logU, xhr_get, xhr_post, Send_SlackBotMessage,
 	getValue, setValue, addValueChangeListener, clearValueChangeListener,
-	getDate, getElems, removeElems, trim, 
+	getDate, getElems, removeElems, trim,
 	GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
 */
 
@@ -45,7 +45,7 @@ function RemoveComments() {
 	// Miscellaneous
 	selectors += ', .trending-posts, .addthis_inline_share_toolbox';
 
-// TODO: create precedence by removing one at a time in that order until none-found, only return the ones removed 
+// TODO: create precedence by removing one at a time in that order until none-found, only return the ones removed
 	// Test for and remove any of the above selectors.
 	var results = getElems(selectors);
 

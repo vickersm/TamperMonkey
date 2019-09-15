@@ -1,9 +1,8 @@
-// Last modified: 8/2/2019 9:32 PM
 // Script Variables
 const USER_NAME = "curUser";
 
 // Implement these in your script:
-// @require		 http://www.createthebehavior.com/tm/Common.Helpers.js
+// @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.Helpers.js
 
 /* globals getDate, getElems, removeElems, trim */
 

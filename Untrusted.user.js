@@ -1,22 +1,22 @@
 // ==UserScript==
-// @name		Untrusted
-// @author		Mike Vickers
-// @namespace	http://vespersoft.net/
-// @description	Watches for level changes in Untrusted.js game
-// @downloadURL	http://createthebehavior.com/tm/Untrusted.user.js
-// @version		1.2
-// @match		https://alexnisnevich.github.io/untrusted/
-// @grant		GM_xmlhttpRequest
-// @run-at		document-body
+// @name         Untrusted
+// @author       Mike Vickers
+// @namespace    http://vespersoft.net/
+// @description  Watches for level changes in Untrusted.js game
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/Untrusted.user.js
+// @version      1.3
+// @match        https://alexnisnevich.github.io/untrusted/
+// @grant        GM_xmlhttpRequest
+// @run-at       document-body
 // ==/UserScript==
 
 // Script Constants
-const scriptName = "Untrusted";
-const BASE_PATH = "https://alexnisnevich.github.io/untrusted";
-const CUR_LEVEL = "levelReached";
-const USER_NAME = "curUser";
-const POLLINGMS = 200;
-const debug = false;
+var scriptName = "Untrusted";
+var BASE_PATH = "https://alexnisnevich.github.io/untrusted";
+var CUR_LEVEL = "levelReached";
+var USER_NAME = "curUser";
+var POLLINGMS = 200;
+var debug = false;
 
 // Slack Channels
 var dbg = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
@@ -89,7 +89,7 @@ function addValueChangeListener(name, callback) {
 		valueCache[name] = new_value;
 		callback(name, old_value, new_value, false);
 	}
-	setTimeout(function() {addValueChangeListener(name, callback)}, POLLINGMS);
+	setTimeout(function() {addValueChangeListener(name, callback);}, POLLINGMS);
 }
 
 // Helper functions
@@ -97,7 +97,7 @@ function getRequestParams() {
 	var search = location.search.substring(1); if (search === "") return {};
 	var obj = '{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}';
 	if (debug) log("RequestParamParser", {"params": search, "string": obj});
-	function decode(key, value) {return key===""?value:decodeURIComponent(value)};
+	function decode(key, value) {return key===""?value:decodeURIComponent(value);}
 	return JSON.parse(obj, decode);
 }
 function getElem(selectors, root) {

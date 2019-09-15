@@ -2,8 +2,8 @@
 // @name         Site Redirecter
 // @namespace    http://vespersoft.com/
 // @description  Fix certain urls
-// @version      0.8
-// @downloadURL  http://createthebehavior.com/tm/SiteRedirecter.user.js
+// @version      0.9
+// @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/SiteRedirecter.user.js
 // @author       Mike Vickers
 // @include      *
 // @exclude      https://www.camelbak.com/*
