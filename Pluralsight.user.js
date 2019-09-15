@@ -4,19 +4,19 @@
 // @namespace    http://vespersoft.net/
 // @description  Uploads and maintains pluralsight data
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/Pluralsight.user.js
-// @version      1.5
+// @version      1.51
 // @match        https://app.pluralsight.com/*
 // @grant        GM_xmlhttpRequest
 // @run-at       document-body
 // ==/UserScript==
 
 // Script Constants
-const scriptName = "Pluralsight";
-const SESSION_LOG = "TM_PS_Log";
-const USER_NAME = "TM_PS_User";
-const basePath = "https://app.pluralsight.com/";
-const pollInMs = 500;
-const debug = false;
+var scriptName = "Pluralsight";
+var SESSION_LOG = "TM_PS_Log";
+var USER_NAME = "TM_PS_User";
+var basePath = "https://app.pluralsight.com/";
+var pollInMs = 500;
+var debug = false;
 
 // Slack Channels
 var dbg = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
@@ -99,8 +99,8 @@ function getElem(selectors, root) {
 }
 var sessLog = {
 	user: function() {
-		const firstName = "firstName---3WiEb";
-		const email = "email---1vkoh";
+		var firstName = "firstName---3WiEb";
+		var email = "email---1vkoh";
 
 		// Grab username from session, shortcircuit if not an email
 		var user = getValue(USER_NAME);
@@ -201,9 +201,9 @@ function monitorSkill(type, params) {
 	// URL Example: paths/skill/python
 
 	// Elements
-	const LINK	= "p._3vqCgZkZ a";
-	const TITLE = "h1._2tRFl44w";
-	const SCORE = "span._2ttjtNXi";
+	var LINK	= "p._3vqCgZkZ a";
+	var TITLE = "h1._2tRFl44w";
+	var SCORE = "span._2ttjtNXi";
 
 	// Jump out if no results on page yet
 	if (getElem(SCORE).length == 0) {
@@ -228,10 +228,10 @@ function monitorScore(type, params) {
 	// URL Example: score/skill-assessment/python?context=paths&path_type=skill&path_url=python
 
 	// Elements
-	const TITLE = "h2.assessmentTitle__hlB2e"
-	const SCORE = "div.score__2Ui_L";
-	const TAKEN = "h3.assessmentDate__Oy0SV";
-	const BADGE = "div.skillBadge__2Z4_p";
+	var TITLE = "h2.assessmentTitle__hlB2e"
+	var SCORE = "div.score__2Ui_L";
+	var TAKEN = "h3.assessmentDate__Oy0SV";
+	var BADGE = "div.skillBadge__2Z4_p";
 
 	// Jump out if no results on page yet
 	if (getElem(BADGE).length == 0) {
@@ -259,11 +259,11 @@ function monitorProfile(type, params) {
 	// URL Example: profile/vghazard
 
 	// Elements
-	const CARDS	 = "div.skillMeasurementCard---3fa8s";
-	const DETAIL = "div.detailsHover---rhxOw a";
-	const HEADER = "div.skillMeasurementHeader---C3xkX h3";
-	const RESULT = "div.level---2yI1B";
-	const SCORED = "div.verifiedDate---26MdF";
+	var CARDS	 = "div.skillMeasurementCard---3fa8s";
+	var DETAIL = "div.detailsHover---rhxOw a";
+	var HEADER = "div.skillMeasurementHeader---C3xkX h3";
+	var RESULT = "div.level---2yI1B";
+	var SCORED = "div.verifiedDate---26MdF";
 
 	// Select out existing courses
 	var cards = getElem(CARDS);

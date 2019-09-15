@@ -2,7 +2,7 @@
 // @name         Comment Box Remover
 // @description  Removes social media boxes from various websites
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/CommentBoxRemover.user.js
-// @version      3.0
+// @version      3.01
 // @author       Mike Vickers
 // @namespace    http://vespersoft.net/
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
@@ -21,17 +21,17 @@
 /* globals log, logU, xhr_get, xhr_post, Send_SlackBotMessage,
 	getValue, setValue, addValueChangeListener, clearValueChangeListener,
 	getDate, getElems, removeElems, trim,
-	GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
+	GM_getRequestParams, GM_getUser, GM_runAfterInit, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
 */
 
-// Upsize these into GM_loaded, with exclusion links generated, and collapse into excludeScripts requestParam (GM_addRequestParam func?)
+// Upsize these into GM_runAfterInit, with exclusion links generated, and collapse into excludeScripts requestParam (GM_addRequestParam func?)
 // Also, centralize debug-flag such that if a script doesnt work, it enables the equiv mode across the board
 
 
 // Script Constants
 var scriptName = "CommentBox";
 
-GM_loaded(RemoveComments, 1000);
+GM_runAfterInit(RemoveComments, 1000);
 
 function RemoveComments() {
 

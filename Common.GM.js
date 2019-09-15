@@ -4,7 +4,7 @@ var USER_NAME = "curUser";
 // Implement these in your script:
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.GM.js
 
-/* globals GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_Debugging */
+/* globals GM_getRequestParams, GM_getUser, GM_runAfterInit, GM_wait, GM_clearWait, GM_clearWaits, GM_Debugging */
 
 
 // GM functions
@@ -29,7 +29,7 @@ function GM_getUser() {
 	return user;
 }
 
-function GM_loaded(func) {
+function GM_runAfterInit(func) {
 	// Wait until doc loaded
 	document.onreadystatechange = function () {
 	    if (document.readyState == "complete") {

@@ -1,5 +1,5 @@
 // Script Variables
-const USER_NAME = "curUser";
+var USER_NAME = "curUser";
 
 // Implement these in your script:
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.Helpers.js

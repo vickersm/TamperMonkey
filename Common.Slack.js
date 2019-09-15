@@ -1,12 +1,12 @@
 // Script Variables
-const SLACK_DEBUGCHAN = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
-const SLACK_WORKSPACE = "TGKSD3YSG";
+var SLACK_DEBUGCHAN = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
+var SLACK_WORKSPACE = "TGKSD3YSG";
 
 // Implement these in your script:
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.Logging.js
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.XHR.js
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.Slack.js
-// @grant        GM_xmlhttpRequest 
+// @grant        GM_xmlhttpRequest
 
 /* globals Send_SlackBotMessage */
 

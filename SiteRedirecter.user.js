@@ -2,7 +2,7 @@
 // @name         Site Redirecter
 // @namespace    http://vespersoft.com/
 // @description  Fix certain urls
-// @version      0.9
+// @version      0.91
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/SiteRedirecter.user.js
 // @author       Mike Vickers
 // @include      *
@@ -12,8 +12,8 @@
 // ==/UserScript==
 
 // Script Constants
-const scriptName = "SiteRedirecter";
-const suffix = "script=GMscript";
+var scriptName = "SiteRedirecter";
+var suffix = "script=GMscript";
 
 function log(message, skipAppend) {
 	message = "[TM: "+scriptName+"] "+message;

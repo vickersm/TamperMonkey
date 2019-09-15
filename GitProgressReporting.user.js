@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Git Progress Reporting
 // @namespace    https://devinsight.slack.com/team/UGKTP5KNE
-// @version      1.7
+// @version      1.71
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/GitProgressReporting.user.js
 // @description  Sends progress updates from interactive Git to Slack
 // @author       Mike Vickers
@@ -12,13 +12,13 @@
 
 
 // Script Constants
-const scriptName = "GitProgress";
-const STORAGEKEY = "solvedMap";
-const CMDHISTORY = "lgb_CommandHistory";
-const FIRST_NAME = "firstName"
-const resendLast = "?resend";
-const pollInMs = 1000;
-const debug = false;
+var scriptName = "GitProgress";
+var STORAGEKEY = "solvedMap";
+var CMDHISTORY = "lgb_CommandHistory";
+var FIRST_NAME = "firstName"
+var resendLast = "?resend";
+var pollInMs = 1000;
+var debug = false;
 
 // Slack Channels
 var dbg = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";

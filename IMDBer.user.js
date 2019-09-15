@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         IMDBer
 // @description  Make looking up Parental Advisory much more simplistic
-// @version      0.6
+// @version      0.61
 // @author       Mike Vickers
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/IMDBer.user.js
 // @namespace    http://vespersoft.net/
@@ -16,12 +16,12 @@
 /* globals log, logU,
 	xhr_get, xhr_post, Send_SlackBotMessage,
 	getValue, setValue, addValueChangeListener, clearValueChangeListener,
-	getElems, GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_Debugging */
+	getElems, GM_getRequestParams, GM_getUser, GM_runAfterInit, GM_wait, GM_clearWait, GM_clearWaits, GM_Debugging */
 
 // Script Constants
-const scriptName = "IMDBer";
+var scriptName = "IMDBer";
 
-GM_loaded(function() {
+GM_runAfterInit(function() {
     'use strict';
 
     // Your code here...

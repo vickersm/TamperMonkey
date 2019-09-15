@@ -1,5 +1,5 @@
 // Script Variables
-const POLLINGMS = 200;
+var POLLINGMS = 200;
 
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.LocalStorage.js
 /* globals getValue, setValue, addValueChangeListener, clearValueChangeListener, clearValueChangeListeners */

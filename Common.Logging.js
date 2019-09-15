@@ -1,7 +1,7 @@
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.Logging.js
 /* globals log, logU */
 
-// Needed variables: const scriptName = "";
+// Needed variables: var scriptName = "";
 
 
 // Log functions

@@ -1,20 +1,20 @@
 // Script Variables:
-const USER_NAME = "curUser";
-const POLLINGMS = 200;
-const SLACK_DBG = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
+var USER_NAME = "curUser";
+var POLLINGMS = 200;
+var SLACK_DBG = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
 var SLACK_WRKSP = "TGKSD3YSG";
 
 // Implement these in your script:
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
 // @grant        GM_xmlhttpRequest
-//	const scriptName = "";
+//	var scriptName = "";
 
 // globals
 //	log, logU, dbg_log, dbg_error,
 //	xhr_get, xhr_post, Send_SlackBotMessage,
 //	getValue, setValue, addValueChangeListener, clearValueChangeListener,
 //	getDate, getElems, removeElems, trim,
-//	GM_getRequestParams, GM_getUser, GM_loaded, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
+//	GM_getRequestParams, GM_getUser, GM_runAfterInit, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
 
 
 //TODO: apply updates from this file into split out files
@@ -221,9 +221,9 @@ function GM_hasSkipLink() {
 
 	return false;
 }
-function GM_loaded(func, repeat) {
+function GM_runAfterInit(func, repeat) {
 	GM_RegisterDebugging();
-	dbg_log("GM_loaded() called", {"repeat": repeat});
+	dbg_log("GM_runAfterInit() called", {"repeat": repeat});
 
 	try {
 		// Handle for Skip link
@@ -240,7 +240,7 @@ function GM_loaded(func, repeat) {
 		};
 	}
 	catch(err) {
-		dbg_error("GM_loaded()", err);
+		dbg_error("GM_runAfterInit()", err);
 	}
 }
 
