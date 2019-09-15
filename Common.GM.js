@@ -1,5 +1,5 @@
 // Script Variables
-const USER_NAME = "curUser";
+var USER_NAME = "curUser";
 
 // Implement these in your script:
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.GM.js
@@ -12,7 +12,7 @@ function GM_getRequestParams() {
 	var search = location.search.substring(1); if (search === "") return {};
 	var obj = '{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}';
 	if (window.debug) log("RequestParamParser", {"params": search, "string": obj});
-	function decode(key, value) {return key===""?value:decodeURIComponent(value)};
+	function decode(key, value) {return key===""?value:decodeURIComponent(value);}
 	return JSON.parse(obj, decode);
 }
 
@@ -37,7 +37,7 @@ function GM_loaded(func) {
 	    	if (!recur) repeat = 200;
 	    	GM_wait(func, repeat, recur);
 	    }
-	}
+	};
 }
 
 var listenerIDs = [];
@@ -45,15 +45,15 @@ function GM_wait(func, timeout, recur) {
 	var id = -1;
 
 	if (recur) {
-		id = setInterval(func, timeout); 
+		id = setInterval(func, timeout);
 	} else {
-		id = setTimeout(func, timeout); 
+		id = setTimeout(func, timeout);
 	}
 
 	listenerIDs.push(id);
 	return id;
 }
-	
+
 function GM_clearWait(id) {
 	// Remove from registered id's
 	var x = listenerIDs.indexOf(id);
@@ -72,12 +72,12 @@ function GM_clearWaits() {
 function GM_Debugging() {
 	var params = GM_getRequestParams();
 	if (params.hasOwnProperty("debug")) {
-		return window.debug = true;
+		return (window.debug = true);
 	}
 
 	if (window.debug) {
 		return true;
 	} else {
-		return window.debug = false;
+		return (window.debug = false);
 	}
 }
