@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         IMDBer
 // @description  Make looking up Parental Advisory much more simplistic
-// @version      0.61
+// @version      0.62
 // @author       Mike Vickers
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/IMDBer.user.js
 // @namespace    http://vespersoft.net/

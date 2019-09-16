@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Git Progress Reporting
 // @namespace    https://devinsight.slack.com/team/UGKTP5KNE
-// @version      1.71
+// @version      1.72
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/GitProgressReporting.user.js
 // @description  Sends progress updates from interactive Git to Slack
 // @author       Mike Vickers
