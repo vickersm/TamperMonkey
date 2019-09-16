@@ -2,7 +2,7 @@
 // @name         Comment Box Remover
 // @description  Removes social media boxes from various websites
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/CommentBoxRemover.user.js
-// @version      3.02
+// @version      3.03
 // @author       Mike Vickers
 // @namespace    http://vespersoft.net/
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js

@@ -57,11 +57,15 @@ function dbg_error(funcName, err) {
 	// Log error
 	dbg_log(funcName+" error", err);
 
-	// Notify debug channel
-	Send_SlackBotMessage(dbg, "Error in "+scriptName+"."+funcName+": "+err);
-
-	// Allow chrome debugging
-	if (window.debug) debugger;
+	if (window.debug) {
+		// Allow chrome debugging
+		debugger;
+	}
+	else
+	{
+		// Notify debug channel
+		Send_SlackBotMessage(SLACK_DBG, "Error in "+scriptName+"."+funcName+": "+err);
+	}
 }
 
 // XHR Requests
@@ -99,7 +103,7 @@ function xhr_post(url, body, callback) {
 function Send_SlackBotMessage(channel, msg) {
 	dbg_log("Send_SlackBotMessage() called", {"message": msg, "channel": channel});
 
-	if (window.debug) channel = SLACK_DEBUGCHAN;
+	if (window.debug) channel = SLACK_DBG;
 
 	var url = "https://hooks.slack.com/services/"+SLACK_WORKSPACE+"/"+channel;
 	var body = {"text": msg};
