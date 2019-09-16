@@ -51,19 +51,7 @@ function logU(message) {
 	log.apply(null, args);
 }
 function dbg_log(message) {
-	if (window.debug) {
-		var args = arguments;
-		var date = getDate();
-
-		// Insert dateTime before any args
-		if (typeof args[0] === "string") {
-			args[0] = date+' '+message;
-		} else {
-			Array.prototype.unshift.call(args, date);
-		}
-
-		log(args);
-	}
+	if (window.debug) log(new Date(), arguments);
 }
 function dbg_error(funcName, err) {
 	// Log error
