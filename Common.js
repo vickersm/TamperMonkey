@@ -208,22 +208,27 @@ function GM_getUser() {
 }
 
 function GM_hasSkipLink() {
-	var params = new URLSearchParams(location.search);
+	// Constants
 	var skip = "tmSkip";
-	var val = params.get(skip) || "";
 	var separator = ".";
-	var list = val.split(sep);
+
+	var params = new URLSearchParams(location.search);
+	var val = params.get(skip) || "";
+	var list = val.split(separator);
 	var index = list.indexOf(scriptName);
+
+	function getLink(s) {
+		return location.href+"?"+s.join(separator);
+	}
 
 	if (params.has(skip) && index > -1) {
 		dbg_log("Skip present, aborting");
-		log("Skipping '"+list.splice(index, 1)+"'. Enable again with: "+location.href+"?"+list.join(separator));
+		log("Skipping '"+list.splice(index, 1)+"'. Enable again with: "+getLink(list));
 		return true;
 	}
 
 	list.push(scriptName);
-	log("See unmodified version here: "+location.href+"?"+list.join(separator));
-
+	log("See unmodified version here: "+getLink(list));
 	return false;
 }
 function GM_runAfterInit(func, repeat) {
