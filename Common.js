@@ -218,7 +218,9 @@ function GM_hasSkipLink() {
 	var index = list.indexOf(scriptName);
 
 	function getLink(s) {
-		return location.href+"?"+s.join(separator);
+		var data = s.join(separator);
+		params.set(scriptName, trim(data, separator));
+		return location.href+"?"+params;
 	}
 
 	if (params.has(skip) && index > -1) {
