@@ -218,9 +218,16 @@ function GM_hasSkipLink() {
 	var index = list.indexOf(scriptName);
 
 	function getLink(s) {
-		var data = s.join(separator);
-		params.set(skipParam, trim(data, separator));
-		return location.href+"?"+params;
+		if (s.length === 0)	{
+			params.delete(skipParam);
+		} else {
+			var data = s.join(separator);
+			params.set(skipParam, trim(data, separator));
+		}
+
+		var suffix = params.toString();
+		if (suffix.length > 0) suffix = "?"+suffix;
+		return location.origin + location.pathname + suffix;
 	}
 
 	if (params.has(skipParam) && index > -1) {
