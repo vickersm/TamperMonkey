@@ -209,21 +209,21 @@ function GM_getUser() {
 
 function GM_hasSkipLink() {
 	// Constants
-	var skip = "tmSkip";
+	var skipParam = "tmSkip";
 	var separator = ".";
 
 	var params = new URLSearchParams(location.search);
-	var val = params.get(skip) || "";
+	var val = params.get(skipParam) || "";
 	var list = val.split(separator);
 	var index = list.indexOf(scriptName);
 
 	function getLink(s) {
 		var data = s.join(separator);
-		params.set(scriptName, trim(data, separator));
+		params.set(skipParam, trim(data, separator));
 		return location.href+"?"+params;
 	}
 
-	if (params.has(skip) && index > -1) {
+	if (params.has(skipParam) && index > -1) {
 		dbg_log("Skip present, aborting");
 		log("Skipping '"+list.splice(index, 1)+"'. Enable again with: "+getLink(list));
 		return true;
