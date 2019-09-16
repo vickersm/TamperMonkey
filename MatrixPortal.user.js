@@ -2,7 +2,7 @@
 // @name         Matrix Portal
 // @description  Adds needed functionality to the portal page
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/MatrixPortal.user.js
-// @version      0.93
+// @version      0.94
 // @author       Mike Vickers
 // @namespace    http://vespersoft.net/
 // @match        https://matrix.ntreis.net/Matrix/Public/Portal.aspx*
@@ -18,9 +18,8 @@
 
 // Script Constants
 var scriptName = "MatrixPortal";
-var updateRate = 1000;
 
-GM_runAfterInit(StartLookup, 200);
+GM_runAfterInit(StartLookup, 700);
 
 function StartLookup() {
 	var elems = getElems(".d-wrapperTable");
@@ -28,6 +27,8 @@ function StartLookup() {
 }
 
 function AddLookups(elems) {
+	dbg_log("AddLookups() called", {"elems": elems});
+
 	var i = 0;
 	for (var x = 0; x < elems.length; x++) {
 		var cur = elems[x];

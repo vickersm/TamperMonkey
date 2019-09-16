@@ -51,7 +51,19 @@ function logU(message) {
 	log.apply(null, args);
 }
 function dbg_log(message) {
-	if (window.debug) log(arguments);
+	if (window.debug) {
+		var args = arguments;
+		var date = getDate();
+
+		// Insert dateTime before any args
+		if (typeof args[0] === "string") {
+			args[0] = date+' '+message;
+		} else {
+			Array.prototype.unshift.call(args, date);
+		}
+
+		log(args);
+	}
 }
 function dbg_error(funcName, err) {
 	// Log error
@@ -154,7 +166,6 @@ function addValueChangeListener(name, callback) {
 // Helper functions
 function getDate() {
 	var val = new Date().toLocaleString().replace(",","").replace(/:.. /," ");
-	dbg_log("getDate() called", val);
 	return val;
 }
 function getElems(selectors, root) {
