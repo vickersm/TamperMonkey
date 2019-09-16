@@ -249,14 +249,12 @@ function GM_runAfterInit(func, repeat) {
 		if (GM_hasSkipLink()) return;
 
 		// Wait until doc loaded
-		document.onreadystatechange = function () {
-		    if (document.readyState == "complete") {
-		    	dbg_log("document.readyState() complete");
-		    	var recur = (repeat != null && repeat > 0);
-		    	if (!recur) repeat = 200;
-		    	GM_wait(func, repeat, recur); // Todo: quick hit first?
-		    }
-		};
+		window.addEventListener('load', function() {
+			dbg_log("window.load() complete");
+			var recur = (repeat != null && repeat > 0);
+			if (!recur) repeat = 200;
+			GM_wait(func, repeat, recur); // Todo: quick hit first?
+		});
 	}
 	catch(err) {
 		dbg_error("GM_runAfterInit()", err);

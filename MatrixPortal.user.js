@@ -2,7 +2,7 @@
 // @name         Matrix Portal
 // @description  Adds needed functionality to the portal page
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/MatrixPortal.user.js
-// @version      0.92
+// @version      0.93
 // @author       Mike Vickers
 // @namespace    http://vespersoft.net/
 // @match        https://matrix.ntreis.net/Matrix/Public/Portal.aspx*
