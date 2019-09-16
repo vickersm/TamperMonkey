@@ -207,17 +207,18 @@ function GM_hasSkipLink() {
 	var params = new URLSearchParams(location.search);
 	var skip = "tmSkip";
 	var val = params.get(skip) || "";
+	var separator = ".";
+	var list = val.split(sep);
+	var index = list.indexOf(scriptName);
 
-	if (params.has(skip) && val.includes(scriptName)) {
+	if (params.has(skip) && index > -1) {
 		dbg_log("Skip present, aborting");
+		log("Skipping '"+list.splice(index, 1)+"'. Enable again with: "+location.href+"?"+list.join(separator));
 		return true;
 	}
 
-	val += "."+scriptName;
-	params.set(skip, trim(val, "."));
-
-	var newLink = location.pathname+"?"+params;
-	log("See unmodified version here: "+newLink);
+	list.push(scriptName);
+	log("See unmodified version here: "+location.href+"?"+list.join(separator));
 
 	return false;
 }
