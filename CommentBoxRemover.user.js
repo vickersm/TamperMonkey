@@ -2,7 +2,7 @@
 // @name         Comment Box Remover
 // @description  Removes social media boxes from various websites
 // @downloadURL  https://github.com/vickersm/TamperMonkey/raw/master/CommentBoxRemover.user.js
-// @version      3.09
+// @version      3.10
 // @author       Mike Vickers
 // @namespace    http://vespersoft.net/
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.js
@@ -27,7 +27,6 @@
 // Upsize these into GM_runAfterInit, with exclusion links generated, and collapse into excludeScripts requestParam (GM_addRequestParam func?)
 // Also, centralize debug-flag such that if a script doesnt work, it enables the equiv mode across the board
 
-
 // Script Constants
 var scriptName = "CommentBox";
 
@@ -36,11 +35,12 @@ GM_runAfterInit(RemoveComments, 1000);
 function RemoveComments() {
 	dbg_log("RemoveComments() called");
 
+	//Todo: lookup partial matching?
 	//Archived: .comment, #comment,
 	// Comment-related
 	var selectors = '.ep-footer, .postcomments, .commentlist, .comments, #comments, .comments-wrap, .comment-section, ' +
 		'#comment-wrap, #comic-comments, #submitted-comments, .comments-text-container, #comment-form-hd, #comment-form, ' +
-		'.js-responsesWrapper, .group_comments, .social-detail, .util-bar-module-comments';
+		'.js-responsesWrapper, .group_comments, .social-detail, .util-bar-module-comments, .ArticlePage-comments';
 	// Social media related
 	selectors += ', #lower #notes-box, div#lcontent.bottom, #blogarea, .social-login, .dpsp-content-wrapper, .inline-share-tools-asset, .util-bar-module-share';
 	// Miscellaneous
