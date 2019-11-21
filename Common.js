@@ -11,7 +11,7 @@ var SLACK_WRKSP = "TGKSD3YSG";
 
 // globals
 //	log, logU, dbg_log, dbg_error,
-//	xhr_get, xhr_post, Send_SlackBotMessage,
+//	xhr_get, xhr_post, xhr_post_auth, Send_SlackBotMessage,
 //	getValue, setValue, addValueChangeListener, clearValueChangeListener,
 //	getDate, getElems, removeElems, trim,
 //	GM_getRequestParams, GM_getUser, GM_runAfterInit, GM_wait, GM_clearWait, GM_clearWaits, GM_RegisterDebugging
@@ -97,7 +97,21 @@ function xhr_post(url, body, callback) {
 	  }
 	});
 }
-
+function xhr_post_auth(url, body, token, callback) {
+	GM_xmlhttpRequest({
+	  method: "POST",
+	  url: url,
+	  data: JSON.stringify(body),
+	  headers: {
+		  "Content-Type": "application/json; charset=UTF-8",
+		  "Authorization": "Bearer " + token
+	  },
+	  onload: function(response) {
+		if (window.debug) log(response);
+		if (callback) callback(response);
+	  }
+	});
+}
 
 // Slack Messages
 function Send_SlackBotMessage(channel, msg) {

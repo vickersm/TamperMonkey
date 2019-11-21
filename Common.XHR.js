@@ -7,7 +7,7 @@ var SLACK_WORKSPACE = "TGKSD3YSG";
 // @require      https://github.com/vickersm/TamperMonkey/raw/master/Common.XHR.js
 // @grant        GM_xmlhttpRequest
 
-/* globals xhr_get, xhr_post */
+/* globals xhr_get, xhr_post, xhr_post_auth */
 
 
 // common operations
@@ -27,7 +27,22 @@ function xhr_post(url, body, callback) {
 	  url: url,
 	  data: JSON.stringify(body),
 	  headers: {
-		"Content-Type": "application/json"
+		"Content-Type": "application/json; charset=UTF-8"
+	  },
+	  onload: function(response) {
+		if (window.debug) log(response);
+		if (callback) callback(response);
+	  }
+	});
+}
+function xhr_post_auth(url, body, token, callback) {
+	GM_xmlhttpRequest({
+	  method: "POST",
+	  url: url,
+	  data: JSON.stringify(body),
+	  headers: {
+		  "Content-Type": "application/json; charset=UTF-8",
+		  "Authorization": "Bearer " + token
 	  },
 	  onload: function(response) {
 		if (window.debug) log(response);
