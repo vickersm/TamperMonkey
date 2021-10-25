@@ -21,8 +21,8 @@ var pollInMs = 1000;
 var debug = false;
 
 // Slack Channels
-var dbg = "BGMT2260M/4ZUUezTftWxSA7xBBRF2r8Kv";
-var git = "BGLTCS89E/nhyW5WBpaxsOQX0GH7OYNR0z";
+var dbg = "B02JVLZM7NF/1Oefd3GbMrywOINy5RffboEn";
+var git = "B02JNUCKH4N/IStGbcnS3yzbRb8RfjNaWqM0";
 
 // Log functions
 function log(message) {
@@ -185,7 +185,7 @@ function Send_SlackBotMessage(channel, msg) {
 
 	GM_xmlhttpRequest({
 	  method: "POST",
-	  url: "https://hooks.slack.com/services/TGKSD3YSG/"+channel,
+	  url: "https://hooks.slack.com/services/TJ56PREF4/"+channel,
 	  data: JSON.stringify({"text": msg}),
 	  headers: {
 		"Content-Type": "application/json"
